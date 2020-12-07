@@ -1,5 +1,6 @@
 # Byte-compiled / optimized / DLL files
 api_env/
+Predicting_Titanic_Survivors.ipynb
 __pycache__/
 *.py[cod]
 *$py.class
