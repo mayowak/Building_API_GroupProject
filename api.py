@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 # import relevant libraries
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, render_template
 import sys 
 from joblib import dump, load
 import traceback
@@ -10,6 +10,10 @@ import numpy as np
 
 # api definition
 app = Flask(__name__)
+
+@app.route('/')
+def display_form():
+    return render_template('./index.html')
 
 # define the predict function
 @app.route('/predict', methods= ['POST']) # endpoint url will contain /predict
