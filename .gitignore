@@ -1,4 +1,9 @@
 # Byte-compiled / optimized / DLL files
+<<<<<<< HEAD
+=======
+api_env/
+Predicting_Titanic_Survivors.ipynb
+>>>>>>> 3521ec3fc2949d2867f438c5085a16798666c103
 __pycache__/
 *.py[cod]
 *$py.class
@@ -126,4 +131,8 @@ venv.bak/
 dmypy.json
 
 # Pyre type checker
+<<<<<<< HEAD
 .pyre/
+=======
+.pyre/
+>>>>>>> 3521ec3fc2949d2867f438c5085a16798666c103
