@@ -1,20 +1,29 @@
 <!DOCTYPE html>
 <html>
     <body>
+        <div class="container">
         <h2> Input Values for Prediction Model</h2>
         <form method="POST" action="/predict">
-            <label for="Pclass"> Passenger Class:  </label> <input type="number" id="Pclass"><br><br>
+            <label for="Pclass"> Passenger Class:
+                  <input type="number" id="Pclass" name="Pclass"> </label> <br><br>
 
-            <label for="Sex_male"> Sex:  </label><input type="number" id="Sex_male"><br><br>
+            <label for="Sex_male"> Sex:  
+                <input type="number" id="Sex_male" name="Sex_male"> </label><br><br>
 
-            <label for="Age"> Age:  </label><input type="number" id="Age"><br><br>
+            <label for="Age"> Age:  
+                <input type="number" id="Age" name="Age"> </label><br><br>
 
-            <label for="Fare"> Fare:  </label><input type="number" id="Fare"><br><br>
+            <label for="Fare"> Fare:  
+                <input type="number" id="Fare" name="Fare"> </label><br><br>
 
-            <label for="Embarked_Q"> Embarked_Q:  </label><input type="number" id="Embarked_Q"><br><br>
+            <label for="Embarked_Q"> Embarked_Q:  
+                <input type="number" id="Embarked_Q" name="Embarked_Q"></label><br><br>
 
-            <label for="Embarked_S"> Embarked_S:  </label><input type="number" id="Embarked_S"><br><br>
+            <label for="Embarked_S"> Embarked_S:  
+                <input type="number" id="Embarked_S" name="Embarked_S" ></label><br><br>
+
             <input type="submit" value="Predict">
         </form>
+    </div>
     </body>
 </html>

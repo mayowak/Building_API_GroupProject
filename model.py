@@ -1,10 +1,9 @@
 #!/usr/bin/env python3
 
-# import necessary libraries
 import pandas as pd
 import numpy as np
 
-# load dataset
+    # load dataset
 titanic = pd.read_csv('./datasets/titanic.csv')
 
 # we'll be working with 5 features and one target variable
@@ -45,12 +44,10 @@ dump(logreg_model, 'model.pkl')
 
 print("Model dumped!")
 
-# Load the model that you just saved
-loaded_model = load('model.pkl')
 
 # Save the features columns 
 model_columns = list(X.columns)
 
-# save model columns
+    # save model columns
 dump(model_columns, 'model_columns.pkl')
 print("Models columns dumped!")
