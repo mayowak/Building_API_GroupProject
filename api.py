@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 # import relevant libraries
-from flask import Flask, jsonify, request, render_template
+from flask import Flask, jsonify, request, render_template, url_for
 import json
 import sys 
 from joblib import dump, load
@@ -51,9 +51,11 @@ def predict():
             dummy_df = dummy_var.reindex(columns = model_columns, fill_value = 0)
 
             # predict the survivors
-            prediction = list(loaded_model.predict(dummy_df))
+            prediction = ['Survived' if loaded_model.predict(dummy_df) == 1 else 'Died']
 
-            return jsonify({'prediction': str(prediction)})
+            
+            # return jsonify({'prediction': str(prediction)})
+            return render_template("result.html" , prediction = prediction)
 
         except: # if model is not loaded, return a traceback
 
@@ -64,6 +66,13 @@ def predict():
         print('Train the model first')
 
         return ('No model loaded')
+
+@app.route('/train_api', methods = ['GET'])
+def train_api():
+
+    exec(open("./model.py").read())
+
+    return "<h2> Training model... </h2>"
 
 
 # write the main function
