@@ -28,6 +28,9 @@ X = titanic.drop(['Survived'], axis = 1)
 # get the target
 Y = titanic['Survived']
 
+# save the cleaned dataset as a csv file
+titanic.to_csv("dataset.csv")
+
 # fit a logistics regression
 # create a linear model
 from sklearn.linear_model import LogisticRegression

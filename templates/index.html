@@ -1,29 +1,45 @@
 <!DOCTYPE html>
 <html>
-    <body>
-        <div class="container">
-        <h2> Input Values for Prediction Model</h2>
+    <title>Predict Titanic Survivors</title>
+
+
+    <div class="container">    
+
+            <h2> View Dataset information</h2>  
+            <form method="POST", action="/view_data"> 
+                <button type="submit" name="head" value='head'>Top view</button>
+                <button type="submit" name="tail" value='tail'>Bottom view</button>
+                <button type="submit" name="info" value='info'>Show dataset info</button>
+            </form>
+    </div>
+
+
+    <div class="container">
+        
         <form method="POST" action="/predict">
+            <label><h2> Please Train Model Here</h2></label>
+            <button type="submit" name="train" value='train'>Train Model</button>
+
+            <h2> Input Values for Prediction Model</h2>
             <label for="Pclass"> Passenger Class:
-                  <input type="number" id="Pclass" name="Pclass"> </label> <br><br>
+                  <input type="number" id="Pclass" name="Pclass" min="1" max="3"> </label> <br><br>
 
             <label for="Sex_male"> Sex:  
-                <input type="number" id="Sex_male" name="Sex_male"> </label><br><br>
+                <input type="number" id="Sex_male" name="Sex_male" min="0" max="1"> </label><br><br>
 
             <label for="Age"> Age:  
-                <input type="number" id="Age" name="Age"> </label><br><br>
+                <input type="number" id="Age" name="Age" min="1"> </label><br><br>
 
             <label for="Fare"> Fare:  
                 <input type="number" id="Fare" name="Fare"> </label><br><br>
 
             <label for="Embarked_Q"> Embarked_Q:  
-                <input type="number" id="Embarked_Q" name="Embarked_Q"></label><br><br>
+                <input type="number" id="Embarked_Q" name="Embarked_Q" min="0" max="1"></label><br><br>
 
             <label for="Embarked_S"> Embarked_S:  
-                <input type="number" id="Embarked_S" name="Embarked_S" ></label><br><br>
+                <input type="number" id="Embarked_S" name="Embarked_S" min="0" max="1"></label><br><br>
 
-            <input type="submit" value="Predict">
+            <button type="submit" name="predict" value='predict'>Predict</button>
         </form>
     </div>
-    </body>
 </html>

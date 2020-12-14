@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 # import relevant libraries
-from flask import Flask, jsonify, request, render_template, url_for
+from flask import Flask, jsonify, request, render_template
 import json
 import sys 
 from joblib import dump, load
@@ -12,6 +12,7 @@ import numpy as np
 # api definition
 app = Flask(__name__)
 
+# display the home page index.html
 @app.route('/')
 def display_form():
     return render_template('./index.html')
@@ -21,8 +22,12 @@ def display_form():
 @app.route('/predict', methods= ['POST']) # endpoint url will contain /predict
 def predict():
 
-    if loaded_model:
+    # if the predict button is clicked run this if block
+    if request.form.get("predict") == "predict":
+        # execute this try block if the predict button is clicked
         try:
+
+            loaded_model = load('model.pkl') # load model and assign to variable
 
             # get the form values by referencing the `name` attribute for each input in the form
             pclass = request.form.get('Pclass')
@@ -32,48 +37,60 @@ def predict():
             embarked = request.form.get('Embarked_Q')
             embarked2 = request.form.get('Embarked_S')
 
-
+            
             # get all input values from form as a list of tuples
-            data_dict = [
+            data_list = [
                         (pclass), (sex),
                         (age), (fare),
                         (embarked), (embarked2)
                         ]
 
             # convert list of tuples to an array of appropriate shape and then to a dataframe
-            query_df = pd.DataFrame(np.array(data_dict).reshape(1, -1))
+            query_df = pd.DataFrame(np.array(data_list).reshape(1, -1))
 
             # get the dummy variables of the dataframe
             dummy_var = pd.get_dummies(query_df)
-        
-            # make sure the columns of the data to be predicted are in line with the columns of the trained dataset,
-            # if the columns are smaller than expected, fill the excess columns with zeros
-            dummy_df = dummy_var.reindex(columns = model_columns, fill_value = 0)
 
-            # predict the survivors
-            prediction = ['Survived' if loaded_model.predict(dummy_df) == 1 else 'Died']
+            # display survived if the predicted value is 1 else display died
+            prediction = "".join(['Survived' if loaded_model.predict(dummy_var.values) == 1 else 'Died'])
 
-            
-            # return jsonify({'prediction': str(prediction)})
+            # return result.html which holds the prediction value
             return render_template("result.html" , prediction = prediction)
 
-        except: # if model is not loaded, return a traceback
+        except: # if model is not loaded, return the strings below
 
-            return jsonify({'trace': traceback.format_exc()})
+            return ("<h2> No model Loaded! <br><br> Please Train Model First... </h2>")
 
-    else:
+    # else if the train button is clicked
+    elif request.form.get("train") == "train":
 
-        print('Train the model first')
+        # use the exec function to run a python script
+        exec(open("./model.py").read())
 
-        return ('No model loaded')
+        return "<h2> Model Trained! </h2>"
 
-@app.route('/train_api', methods = ['GET'])
-def train_api():
+        
+# function that prints the head of the cleaned dataset
+@app.route('/view_data', methods = ['POST'])
+def get_head_tail_info():
 
-    exec(open("./model.py").read())
+    # get the cleaned dataset
+    read_file = pd.read_csv('./dataset.csv')
 
-    return "<h2> Training model... </h2>"
+    # get the form submit button whose name is head and value is head
+    if request.form.get("head") == "head":
+        # show just the head
+        return read_file.head().to_html()
 
+    # get the form submit button whose name is tail and value is tail
+    elif request.form.get("tail") == "tail":
+        # show just the tail
+        return read_file.tail().to_html()
+
+    # get the form submit button whose name is info and value is info
+    elif request.form.get('info') == "info":
+        # return the dataset description
+        return read_file.describe().to_html()
 
 # write the main function
 if __name__ == '__main__':
@@ -85,13 +102,5 @@ if __name__ == '__main__':
 
         port = 13579 # if not use this
 
-
-    loaded_model = load('model.pkl') # load model and assign to variable
-
-    print('model loaded')
-
-    model_columns = load('model_columns.pkl') # load model columns and assign to variable
-
-    print('model columns loaded')
 
     app.run(port = port, debug = True)
